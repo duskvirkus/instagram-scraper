@@ -96,7 +96,7 @@ class InstagramScraper(object):
                             media_types=['image', 'video', 'story-image', 'story-video', 'broadcast'],
                             tag=False, location=False, search_location=False, comments=False,
                             verbose=0, include_location=False, filter=None, proxies={}, no_check_certificate=False,
-                                                        template='{urlname}', log_destination='')
+                                                        template='{urlname}', log_destination='', conceal_one=False)
 
         allowed_attr = list(default_attr.keys())
         default_attr.update(kwargs)
@@ -498,6 +498,9 @@ class InstagramScraper(object):
                     iter = iter + 1
                     if self.maximum != 0 and iter >= self.maximum:
                         break
+
+                    if self.conseal_one:
+                      sleep(random(2000, 5000))
 
                 if future_to_item:
                     for future in tqdm.tqdm(concurrent.futures.as_completed(future_to_item),
@@ -1555,6 +1558,7 @@ def main():
     parser.add_argument('--verbose', '-v', type=int, default=0, help='Logging verbosity level')
     parser.add_argument('--template', '-T', type=str, default='{urlname}', help='Customize filename template')
     parser.add_argument('--log_destination', '-l', type=str, default='', help='destination folder for the instagram-scraper.log file')
+    parser.add_argument('--conceal_one', '-c1', default=False, help='Attemps to conceal scraping by adding 2-5 second delay between requests.')
 
     args = parser.parse_args()
 

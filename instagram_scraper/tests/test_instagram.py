@@ -33,7 +33,8 @@ class InstagramTests(unittest.TestCase):
             'retain_username': False,
             'media_metadata': False,
             'media_types': ['image', 'video', 'story'],
-            'latest': False
+            'latest': False,
+            'conseal1': False
         }
 
         self.scraper = InstagramScraper(**args)
